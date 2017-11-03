@@ -22,23 +22,46 @@ app.get('/', (request, response) => {
 app.get('/api/v1/inventory', (request, response) => {
   database('inventory')
   .select()
+  .then(items => {
+    if (!items.length) {
+      return response.status(404).json({ error: 'No items found in inventory!' });
+    } else {
+      return items;
+    }
+  })
   .then(items => response.status(200).json(items))
-  .catch(error => response.status(500).json({error}))
+  .catch(error => response.status(500).json({ error }))
+})
+
+app.get('/api/v1/order_history', (request, response) => {
+  database('order_history')
+  .select()
+  .then(orders => {
+    if (!orders.length) {
+      return response.status(404).json({ error: 'No orders found!' });
+    } else {
+      return orders
+    }
+  })
+  .then(orders => response.status(200).json(orders))
+  .catch(error => response.status(500).json({ error }))
 })
 
 app.post('/api/v1/order_history', (request, response) => {
-  database('order_history').insert({
-    total_price: request.body.total_price,
-    date: request.body.date,
-  }, '*')
-  .then(order_historyID => {
-    response.status(201).json(order_historyID)
-  })
-  .catch(error =>  {
-    response.status(500).json(error)
-  })
-})
+  const order = request.body;
 
+  // if (!order.order_total) {
+  //   return response
+  //     .status(422)
+  //     .send({ error: 'Expected format: { order_total: <Decimal> } You are missing order_total property' });
+  // }
+
+  database('order_history').insert({
+    order_total: order.order_total
+  }, '*')
+  .then(order => response.status(201).json(order))
+  .catch(error => response.status(500).json({ error }))
+})
 
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
