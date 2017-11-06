@@ -26,6 +26,12 @@ const displayInventory = (items) => {
   })
 }
 
+const updateAddItems = (e) => {
+  addItemToCart(e);
+  cartSubTotal();
+  saveCartLocalStorage(e);
+}
+
 const addItemToCart = (e) => {
   const itemName = $(e.target).siblings('.item-name').text();
   const price = $(e.target).siblings('.item-price').text();
@@ -36,9 +42,6 @@ const addItemToCart = (e) => {
       <p class='cart-item-price'>${price}</p>
     </div>`
   )
-
-cartSubTotal();
-
 }
 
 const cartSubTotal = () => {
@@ -49,16 +52,23 @@ const cartSubTotal = () => {
   })
 
  $('.total-cart-price').text(`Total Price: $${total.toFixed(2)}`)
- console.log($('.total-cart-price').text().split('$')[1]);
 }
 
-// const saveCartLocalStorage = () => {
+const saveCartLocalStorage = (e) => {
+  const itemName = $(e.target).siblings('.item-name').text();
+  const price = $(e.target).siblings('.item-price').text();
+  const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  storedCart.push({ itemName, price});
+
+  localStorage.setItem('cart', JSON.stringify(storedCart));
+}
+
+// const pullCartFromLocalStorage = () => {
 //
 // }
 
-$('.item-list').click('.add-to-cart', addItemToCart)
-
-const saveOrder = () => {
+const saveOrderToHistory = () => {
   const orderTotalPrice = parseFloat($('.total-cart-price').text().split('$')[1])
 
   fetch('/api/v1/order_history', {
@@ -69,8 +79,8 @@ const saveOrder = () => {
   .then(response => response.json())
   .then(results => console.log(results))
   .catch(error => console.log({ error }))
-
-  console.log('yay clicked');
 }
 
-$('.purchase-btn').on('click', saveOrder)
+
+$('.item-list').click('.add-to-cart', updateAddItems)
+$('.purchase-btn').click(saveOrderToHistory)
