@@ -16,3 +16,43 @@ header {
   height: 100px;
   justify-content: center;
 }
+
+.item-list {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+  width: 80%;
+}
+
+.item-list div {
+  align-items: center;
+  border: 1px solid grey;
+  display: flex;
+  flex-direction: column;
+  height: 350px;
+  justify-content: center;
+  margin: 20px;
+  width: 300px;
+}
+
+img {
+  height: 175px;
+  width: 175px;
+}
+
+.order-history {
+  border: 1px solid grey;
+  float: left;
+  height: 600px;
+  width: 10%;
+}
+
+.shopping-cart {
+  border: 1px solid grey;
+  float: right;
+  height: 300px;
+  width: 10%;
+}

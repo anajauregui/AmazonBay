@@ -50,11 +50,11 @@ app.get('/api/v1/order_history', (request, response) => {
 app.post('/api/v1/order_history', (request, response) => {
   const order = request.body;
 
-  // if (!order.order_total) {
-  //   return response
-  //     .status(422)
-  //     .send({ error: 'Expected format: { order_total: <Decimal> } You are missing order_total property' });
-  // }
+  if (!order.order_total) {
+    return response
+      .status(422)
+      .send({ error: 'Expected format: { order_total: <Decimal> } You are missing order_total property' });
+  }
 
   database('order_history').insert({
     order_total: order.order_total
