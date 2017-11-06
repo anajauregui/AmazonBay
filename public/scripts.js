@@ -48,14 +48,19 @@ const cartSubTotal = () => {
     total += parseFloat($(elem).text().split('$')[1]);
   })
 
- console.log(total);
-
  $('.total-cart-price').text(`Total Price: $${total.toFixed(2)}`)
+ console.log($('.total-cart-price').text().split('$')[1]);
 }
+
+// const saveCartLocalStorage = () => {
+//
+// }
 
 $('.item-list').click('.add-to-cart', addItemToCart)
 
-const saveOrder = (orderTotalPrice) => {
+const saveOrder = () => {
+  const orderTotalPrice = parseFloat($('.total-cart-price').text().split('$')[1])
+
   fetch('/api/v1/order_history', {
     method: 'POST',
     body: JSON.stringify({ order_total: orderTotalPrice }),
@@ -64,4 +69,8 @@ const saveOrder = (orderTotalPrice) => {
   .then(response => response.json())
   .then(results => console.log(results))
   .catch(error => console.log({ error }))
+
+  console.log('yay clicked');
 }
+
+$('.purchase-btn').on('click', saveOrder)
