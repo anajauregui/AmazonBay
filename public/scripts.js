@@ -37,7 +37,19 @@ const displayInventory = (items) => {
 }
 
 const displayOrderHistory = (orders) => {
-  orders.map(order => console.log(order))
+  orders.map(order => {
+    console.log(order);
+
+    purchaseDate = (order.created_at).slice(0, 10);
+    totalOrderPrice  = parseFloat(order.order_total).toFixed(2);
+
+    $('.order-history').append(
+      `<div class='previous-orders'>
+      <p>Purchase Date: ${purchaseDate}</p>
+      <p>Order Total: ${totalOrderPrice}</p>
+    </div>`
+    )
+  })
 }
 
 const updateAddItems = (e) => {
@@ -50,7 +62,7 @@ const addItemToCart = (e) => {
   const itemName = $(e.target).siblings('.item-name').text();
   const price = $(e.target).siblings('.item-price').text();
 
-  $('.shopping-cart').prepend(
+  $('.shopping-cart').append(
     `<div>
       <p>${itemName}</p>
       <p class='cart-item-price'>${price}</p>
