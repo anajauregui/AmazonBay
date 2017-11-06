@@ -1,5 +1,7 @@
 $(document).ready(() => {
   fetchInventory();
+  pullCartFromLocalStorage();
+  // cartSubTotal();
 })
 
 const fetchInventory = () => {
@@ -59,17 +61,29 @@ const saveCartLocalStorage = (e) => {
   const price = $(e.target).siblings('.item-price').text();
   const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
 
-  storedCart.push({ itemName, price});
+  storedCart.push({ itemName, price });
 
   localStorage.setItem('cart', JSON.stringify(storedCart));
 }
 
-// const pullCartFromLocalStorage = () => {
-//
-// }
+const pullCartFromLocalStorage = () => {
+  const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  storedCart.forEach(item => {
+    $('.shopping-cart').prepend(
+      `<div>
+        <p>${item.itemName}</p>
+        <p class='cart-item-price'>${item.price}</p>
+      </div>`
+    )
+    cartSubTotal();
+  })
+}
 
 const saveOrderToHistory = () => {
-  const orderTotalPrice = parseFloat($('.total-cart-price').text().split('$')[1])
+  const orderTotalPrice = parseFloat($('.total-cart-price').text().split('$')[1]);
+
+  localStorage.clear();
 
   fetch('/api/v1/order_history', {
     method: 'POST',
@@ -79,6 +93,13 @@ const saveOrderToHistory = () => {
   .then(response => response.json())
   .then(results => console.log(results))
   .catch(error => console.log({ error }))
+
+  cartRefresh();
+}
+
+const cartRefresh = () => {
+  $('.shopping-cart').empty();
+  $('.total-cart-price').text('');
 }
 
 
