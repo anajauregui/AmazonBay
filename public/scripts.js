@@ -1,5 +1,6 @@
 $(document).ready(() => {
   fetchInventory();
+  fetchOrders();
   pullCartFromLocalStorage();
   // cartSubTotal();
 })
@@ -8,6 +9,13 @@ const fetchInventory = () => {
   fetch('/api/v1/inventory')
     .then(response => response.json())
     .then(response => displayInventory(response))
+    .catch(error => console.log(error))
+}
+
+const fetchOrders = () => {
+  fetch('/api/v1/order_history')
+    .then(response => response.json())
+    .then(response => displayOrderHistory(response))
     .catch(error => console.log(error))
 }
 
@@ -26,6 +34,10 @@ const displayInventory = (items) => {
       <button class="add-to-cart">Add to cart</button>
     </div>`)
   })
+}
+
+const displayOrderHistory = (orders) => {
+  orders.map(order => console.log(order))
 }
 
 const updateAddItems = (e) => {
