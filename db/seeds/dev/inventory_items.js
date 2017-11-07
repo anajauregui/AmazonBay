@@ -21,7 +21,7 @@ exports.seed = function(knex, Promise) {
           id: 3,
           title: 'North Face Freedom LRBC Insulated Pants',
           description: 'Keep warm with these stylish insulated ski pants as you enjoy turns down the slopes, available in a variety of colors and sizes.',
-          picture_url: 'https://www.snowinn.com/f/64/649508_5/-starchaser-peak-ii-pants-youth.jpg',
+          picture_url: 'https://ae01.alicdn.com/kf/HTB10E3BMXXXXXb_XXXXq6xXFXXXo/Gsou-snow-ski-pants-women-s-snowboard-pants-waterproof-womens-breathable-windproof-pants-sport-outdoor-skiing.jpg_640x640.jpg',
           price: 75.00
         },
         {
