@@ -38,10 +38,9 @@ const displayInventory = (items) => {
 
 const displayOrderHistory = (orders) => {
   orders.map(order => {
-    console.log(order);
 
-    purchaseDate = (order.created_at).slice(0, 10);
-    totalOrderPrice  = parseFloat(order.order_total).toFixed(2);
+    const purchaseDate = (order.created_at).slice(0, 10);
+    const totalOrderPrice  = parseFloat(order.order_total).toFixed(2);
 
     $('.order-history').append(
       `<div class='previous-orders'>
@@ -74,7 +73,7 @@ const cartSubTotal = () => {
   let total = 0;
 
   $('.cart-item-price').each((i, elem) => {
-    total += ( parseFloat($(elem).text().slice(8)) || 0);
+    total += (parseFloat($(elem).text().slice(8)) || 0);
   })
 
  $('.total-cart-price').text(`Total Price: $${total.toFixed(2)}`)
@@ -115,13 +114,28 @@ const saveOrderToHistory = () => {
     headers: {'Content-Type': 'application/json'}
   })
   .then(response => response.json())
-  .then(results => console.log(results))
+  .then(order => addSingleOrderToHistory(order[0]))
   .catch(error => console.log({ error }))
 
   cartRefresh();
 }
 
+const addSingleOrderToHistory = (order) => {
+console.log(order);
+
+  const purchaseDate = (order.created_at).slice(0, 10);
+  const totalOrderPrice  = parseFloat(order.order_total).toFixed(2);
+
+  $('.order-history').append(
+    `<div class='previous-orders'>
+    <p>Purchase Date: ${purchaseDate}</p>
+    <p>Order Total: ${totalOrderPrice}</p>
+  </div>`
+  )
+}
+
 const cartRefresh = () => {
+  localStorage.clear();
   $('.cart').empty();
   $('.total-cart-price').text('');
 }
@@ -129,3 +143,4 @@ const cartRefresh = () => {
 
 $('.item-list').click('.add-to-cart', updateAddItems)
 $('.purchase-btn').click(saveOrderToHistory)
+$('.clear-cart-btn').click(cartRefresh)
