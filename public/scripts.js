@@ -62,7 +62,7 @@ const addItemToCart = (e) => {
   const itemName = $(e.target).siblings('.item-name').text();
   const price = $(e.target).siblings('.item-price').text();
 
-  $('.shopping-cart').append(
+  $('.cart').append(
     `<div>
       <p>${itemName}</p>
       <p class='cart-item-price'>${price}</p>
@@ -74,7 +74,7 @@ const cartSubTotal = () => {
   let total = 0;
 
   $('.cart-item-price').each((i, elem) => {
-    total += parseFloat($(elem).text().split('$')[1]);
+    total += ( parseFloat($(elem).text().slice(8)) || 0);
   })
 
  $('.total-cart-price').text(`Total Price: $${total.toFixed(2)}`)
@@ -94,7 +94,7 @@ const pullCartFromLocalStorage = () => {
   const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
 
   storedCart.forEach(item => {
-    $('.shopping-cart').prepend(
+    $('.cart').prepend(
       `<div>
         <p>${item.itemName}</p>
         <p class='cart-item-price'>${item.price}</p>
@@ -122,7 +122,7 @@ const saveOrderToHistory = () => {
 }
 
 const cartRefresh = () => {
-  $('.shopping-cart').empty();
+  $('.cart').empty();
   $('.total-cart-price').text('');
 }
 
