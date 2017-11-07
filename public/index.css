@@ -17,14 +17,18 @@ header {
   justify-content: center;
 }
 
+.previous-orders {
+  margin: 20px 0;
+}
+
 .item-list {
   align-items: center;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
-  margin: auto;
-  width: 80%;
+  justify-content: space-around;
+  margin-top: 30px;
+  width: 60%;
 }
 
 .item-list div {
@@ -32,14 +36,16 @@ header {
   border: 1px solid grey;
   display: flex;
   flex-direction: column;
-  height: 350px;
+  height: 400px;
   justify-content: center;
+  padding: 10px;
   margin: 20px;
   width: 300px;
 }
 
 img {
   height: 175px;
+  padding: 15px;
   width: 175px;
 }
 
@@ -47,12 +53,36 @@ img {
   border: 1px solid grey;
   float: left;
   height: 600px;
-  width: 10%;
+  margin: 50px 50px 0 0;
+  padding: 20px;
+  text-align: left;
+  width: 15%;
 }
 
 .shopping-cart {
   border: 1px solid grey;
+  bottom: 725px;
   float: right;
   height: 300px;
-  width: 10%;
+  position: relative;
+  text-align: center;
+  width: 20%;
+}
+
+.shopping-cart h3 {
+  padding-top: 15px;
+}
+
+.cart {
+  padding-left: 15px;
+  margin: 10px 0;
+  text-align: left;
+}
+
+.cart div {
+  margin: 15px 0;
+}
+
+.total-cart-price {
+  margin: 10px;
 }

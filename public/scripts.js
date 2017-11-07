@@ -2,7 +2,6 @@ $(document).ready(() => {
   fetchInventory();
   fetchOrders();
   pullCartFromLocalStorage();
-  // cartSubTotal();
 })
 
 const fetchInventory = () => {
