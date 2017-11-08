@@ -7,14 +7,14 @@ $(document).ready(() => {
 const fetchInventory = () => {
   fetch('/api/v1/inventory')
     .then(response => response.json())
-    .then(response => displayInventory(response))
+    .then(items => displayInventory(items))
     .catch(error => console.log(error))
 }
 
 const fetchOrders = () => {
   fetch('/api/v1/order_history')
     .then(response => response.json())
-    .then(response => displayOrderHistory(response))
+    .then(orders => displayOrderHistory(orders))
     .catch(error => console.log(error))
 }
 
@@ -44,7 +44,7 @@ const displayOrderHistory = (orders) => {
     $('.order-history').append(
       `<div class='previous-orders'>
       <p>Purchase Date: ${purchaseDate}</p>
-      <p>Order Total: ${totalOrderPrice}</p>
+      <p>Order Total: $${totalOrderPrice}</p>
     </div>`
     )
   })
@@ -120,7 +120,6 @@ const saveOrderToHistory = () => {
 }
 
 const addSingleOrderToHistory = (order) => {
-console.log(order);
 
   const purchaseDate = (order.created_at).slice(0, 10);
   const totalOrderPrice  = parseFloat(order.order_total).toFixed(2);
@@ -128,7 +127,7 @@ console.log(order);
   $('.order-history').append(
     `<div class='previous-orders'>
     <p>Purchase Date: ${purchaseDate}</p>
-    <p>Order Total: ${totalOrderPrice}</p>
+    <p>Order Total: $${totalOrderPrice}</p>
   </div>`
   )
 }
@@ -139,7 +138,22 @@ const cartRefresh = () => {
   $('.total-cart-price').text('');
 }
 
+const toggleOrderHistoryPanel = () => {
+  const text =  $('.view-history').text() == 'View Order History' ? 'Hide Order History' : 'View Order History';
 
+  $('.view-history').text(text);
+  $('.order-history').toggleClass('show');
+}
+
+const toggleCartPanel = () => {
+  const text =  $('.view-cart').text() == 'View Cart' ? 'Hide Cart' : 'View Cart';
+
+  $('.view-cart').text(text);
+  $('.shopping-cart').toggleClass('show');
+}
+
+$('.view-cart').click(toggleCartPanel)
+$('.view-history').click(toggleOrderHistoryPanel)
 $('.item-list').click('.add-to-cart', updateAddItems)
 $('.purchase-btn').click(saveOrderToHistory)
 $('.clear-cart-btn').click(cartRefresh)
