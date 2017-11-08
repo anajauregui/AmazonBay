@@ -44,7 +44,7 @@ const displayOrderHistory = (orders) => {
     $('.order-history').append(
       `<div class='previous-orders'>
       <p>Purchase Date: ${purchaseDate}</p>
-      <p>Order Total: ${totalOrderPrice}</p>
+      <p>Order Total: $${totalOrderPrice}</p>
     </div>`
     )
   })
@@ -120,7 +120,6 @@ const saveOrderToHistory = () => {
 }
 
 const addSingleOrderToHistory = (order) => {
-console.log(order);
 
   const purchaseDate = (order.created_at).slice(0, 10);
   const totalOrderPrice  = parseFloat(order.order_total).toFixed(2);
@@ -128,7 +127,7 @@ console.log(order);
   $('.order-history').append(
     `<div class='previous-orders'>
     <p>Purchase Date: ${purchaseDate}</p>
-    <p>Order Total: ${totalOrderPrice}</p>
+    <p>Order Total: $${totalOrderPrice}</p>
   </div>`
   )
 }
@@ -140,13 +139,17 @@ const cartRefresh = () => {
 }
 
 const toggleOrderHistoryPanel = () => {
+  const text =  $('.view-history').text() == 'View Order History' ? 'Hide Order History' : 'View Order History';
+
+  $('.view-history').text(text);
   $('.order-history').toggleClass('show');
-  // $('.view-history').text('Hide Details');
 }
 
 const toggleCartPanel = () => {
-  $('.shopping-cart').toggleClass('show');
+  const text =  $('.view-cart').text() == 'View Cart' ? 'Hide Cart' : 'View Cart';
 
+  $('.view-cart').text(text);
+  $('.shopping-cart').toggleClass('show');
 }
 
 $('.view-cart').click(toggleCartPanel)
