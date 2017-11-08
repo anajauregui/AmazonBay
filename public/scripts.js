@@ -7,14 +7,14 @@ $(document).ready(() => {
 const fetchInventory = () => {
   fetch('/api/v1/inventory')
     .then(response => response.json())
-    .then(response => displayInventory(response))
+    .then(items => displayInventory(items))
     .catch(error => console.log(error))
 }
 
 const fetchOrders = () => {
   fetch('/api/v1/order_history')
     .then(response => response.json())
-    .then(response => displayOrderHistory(response))
+    .then(orders => displayOrderHistory(orders))
     .catch(error => console.log(error))
 }
 
@@ -139,7 +139,18 @@ const cartRefresh = () => {
   $('.total-cart-price').text('');
 }
 
+const toggleOrderHistoryPanel = () => {
+  $('.order-history').toggleClass('show');
+  // $('.view-history').text('Hide Details');
+}
 
+const toggleCartPanel = () => {
+  $('.shopping-cart').toggleClass('show');
+
+}
+
+$('.view-cart').click(toggleCartPanel)
+$('.view-history').click(toggleOrderHistoryPanel)
 $('.item-list').click('.add-to-cart', updateAddItems)
 $('.purchase-btn').click(saveOrderToHistory)
 $('.clear-cart-btn').click(cartRefresh)
