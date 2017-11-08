@@ -15,8 +15,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', process.env.PORT || 3000);
 app.locals.title = 'amazonBay';
 
-app.get('/', (request, response) => {
-  response.send('Welcome to amazonBay!');
+app.listen(app.get('port'), () => {
+  console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 });
 
 app.get('/api/v1/inventory', (request, response) => {
@@ -62,9 +62,5 @@ app.post('/api/v1/order_history', (request, response) => {
   .then(order => response.status(201).json(order))
   .catch(error => response.status(500).json({ error }))
 })
-
-app.listen(app.get('port'), () => {
-  console.log(`${app.locals.title} is running on ${app.get('port')}.`);
-});
 
 module.exports = app;
