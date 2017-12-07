@@ -115,5 +115,25 @@ describe('API Routes', () => {
         });
       });
 
-    })
-  })
+      it('should not add order unless all correct parameters are passed in', (done) => {
+        chai.request(server)
+          .post('api/v1/order_history')
+          .send({  history_total: 22.00 })
+          .end( (error, response) => {
+            response.should.have.status(422);
+            response.should.be.json;
+            response.body.error.should.equal('Expected format: { order_total: <Decimal> } You are missing order_total property')
+          });
+
+          chai.request(server)
+          .get('/api/v1/order_history')
+          .end( (error, response) => {
+            response.should.have.status(200);
+            response.should.be.json;
+            response.body.should.be.a('array');
+            response.body.length.should.equal(3);
+            done();
+          });
+      });
+    });
+  });
